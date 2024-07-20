@@ -12,6 +12,9 @@ vim.opt.expandtab = true
 vim.opt.colorcolumn = "80" -- visual ruler
 vim.opt.textwidth = 80 -- width set for 'gw'
 
+-- cursor column color
+vim.opt.cursorcolumn = true
+
 -- spellin
 vim.opt.spell = true
 
