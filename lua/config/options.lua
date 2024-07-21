@@ -45,7 +45,6 @@ vim.opt.clipboard = ""
 --     - yaml
 --         - helm?
 --         - docker compose?
---     - markdown
 --     - terraform
 -- debuggers?  or just lean on vscode for that?
 -- init.lua that plays nice with vscode?
