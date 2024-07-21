@@ -43,11 +43,10 @@ vim.opt.clipboard = ""
 -- make split borders more visible
 -- Language setups for:
 --     - yaml
+--         - helm?
+--         - docker compose?
 --     - markdown
 --     - terraform
---     - toml
---     - helm?
---     - docker
 -- debuggers?  or just lean on vscode for that?
 -- init.lua that plays nice with vscode?
 --
