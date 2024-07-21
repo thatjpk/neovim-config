@@ -11,19 +11,21 @@ vim.opt.expandtab = true
 -- 80 columns
 vim.opt.colorcolumn = "80" -- visual ruler
 vim.opt.textwidth = 80 -- width set for 'gw'
+-- TODO set color from theme?
 
 -- cursor column color
 vim.opt.cursorcolumn = true
+-- TODO set color from theme?
 
 -- spellin
 vim.opt.spell = true
 
--- use the unnamed register as the default for yanks and cuts.  lazyvim's
--- default is to use a register that syncs with the system clipboard, which is
--- annoying when every little action in vim clobbers the system clipboard.
--- Using the `"+` register will put stuff into the system clipboard, and using
--- the normal OS paste in the terminal can insert stuff from the system
--- clipboard.
+-- use the unnamed register as the default for yanks and cuts, like stock vim.
+-- lazyvim's default is to use a register that syncs with the system clipboard,
+-- which is annoying when every little action in vim clobbers the system
+-- clipboard. Using the `"+` register will put stuff into the system clipboard,
+-- and using the normal OS paste in the terminal can insert stuff from the
+-- system clipboard.
 vim.opt.clipboard = ""
 
 -- TODOs:
@@ -40,7 +42,6 @@ vim.opt.clipboard = ""
 -- lazygit?
 -- make split borders more visible
 -- Language setups for:
---     - json
 --     - yaml
 --     - markdown
 --     - terraform
