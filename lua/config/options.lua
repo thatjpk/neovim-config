@@ -18,13 +18,16 @@ vim.opt.cursorcolumn = true
 -- spellin
 vim.opt.spell = true
 
+-- use the unnamed register as the default for yanks and cuts.  lazyvim's
+-- default is to use a register that syncs with the system clipboard, which is
+-- annoying when every little action in vim clobbers the system clipboard.
+-- Using the `"+` register will put stuff into the system clipboard, and using
+-- the normal OS paste in the terminal can insert stuff from the system
+-- clipboard.
+vim.opt.clipboard = ""
+
 -- TODOs:
 
--- disable the merged clipboard thing
---     - This config puts everything that lands in the default vim register
---       into the system clipboard.  It's honestly worse than when they're
---       separate because your system clipboard gets clobbered by every little
---       thing in vim (e.g., normal mode 'x', 'ciw', etc.)
 -- jwt commands
 -- j and k move within a line when wrapped?
 --   (old config used up/down for this and left j/k move between lines the
@@ -34,6 +37,7 @@ vim.opt.spell = true
 -- F6 line num toggle (none, rel, abs)
 -- shop color schemes (also, use color scheme color for 80 col ruler)
 -- git gutter?  there has to be a lazyvim thing installed for this?
+-- lazygit?
 -- make split borders more visible
 -- Language setups for:
 --     - json
@@ -43,6 +47,6 @@ vim.opt.spell = true
 --     - toml
 --     - helm?
 --     - docker
--- debuggers?  or just lean on vscode for that? lazygit?
+-- debuggers?  or just lean on vscode for that?
 -- init.lua that plays nice with vscode?
 --
