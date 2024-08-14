@@ -18,6 +18,7 @@ This is mostly just [LazyVim](https://github.com/LazyVim/LazyVim) with some pers
 - Misc settings in `lua/config/options.lua`:
     - Indention preferences (four-space, don't @ me)
     - 80 column stuff
-        - Visual ruler using `colorcolumn`
-        - Set textwidth for `gw`
+        - Visual rulers at 80 and 120 columns using `colorcolumn`
+        - Set textwidth to 80 for doing stuff like hard wrapping comments with
+        `gw`
     - Other stuff TODO

@@ -9,7 +9,7 @@ vim.opt.softtabstop = 4
 vim.opt.expandtab = true
 
 -- 80 columns
-vim.opt.colorcolumn = "80" -- visual ruler
+vim.opt.colorcolumn = "80,120" -- visual rulers
 vim.opt.textwidth = 80 -- width set for 'gw'
 -- TODO set color from theme?
 
@@ -19,6 +19,9 @@ vim.opt.cursorcolumn = true
 
 -- spellin
 vim.opt.spell = true
+
+-- don't autoformat on save... i've got this under control.
+vim.g.autoformat = false
 
 -- use the unnamed register as the default for yanks and cuts, like stock vim.
 -- lazyvim's default is to use a register that syncs with the system clipboard,
@@ -45,7 +48,7 @@ vim.api.nvim_create_user_command("B64e", ":set ft=txt | %!base64 --wrap=0", {})
 -- decode buffer as base64
 vim.api.nvim_create_user_command("B64d", ":set ft=txt | %!base64 --decode", {})
 -- decode the buffer as a jwt
-vim.api.nvim_create_user_command("Jwtd", ":%!jwt decoe --json -", {})
+vim.api.nvim_create_user_command("Jwtd", ":%!jwt decode --json -", {})
 -- decode the buffer as a jwt and run the json through jq to make it pretty
 vim.api.nvim_create_user_command("Jwtdp", function()
     vim.cmd("Jwtd")

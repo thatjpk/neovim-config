@@ -13,8 +13,9 @@ local pylsp_available = vim.fn.executable("pylsp") == 1
 local pycodestyle_ignored = {
     -- "E501", -- "line too long"
     "E266", -- "too many leading  # for block comment"
+    "W503", -- "line break before binary operator"
 }
-local max_line_len = 100
+local max_line_len = 120
 
 return {
     {
