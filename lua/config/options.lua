@@ -31,6 +31,9 @@ vim.g.autoformat = false
 -- system clipboard.
 vim.opt.clipboard = ""
 
+-- disable the hiding of quotes in stuff like JSON and Markdown text
+vim.opt.conceallevel = 0
+
 -- shortcuts for base64 encode/decode, json formatting, and jwt decode.
 -- these all operate on the whole buffer.
 --
@@ -97,5 +100,4 @@ vim.api.nvim_create_user_command(
 --     - terraform
 -- debuggers?  or just lean on vscode for that?
 -- init.lua that plays nice with vscode?
--- get rid of the quote-hiding thing that shows up in JSON and markdown files.
 --
