@@ -43,25 +43,39 @@ vim.opt.conceallevel = 0
 --   - jwt (https://github.com/mike-engel/jwt-cli)
 --
 -- run the buffer through jq to make it pretty
-vim.api.nvim_create_user_command("Jqp", ":set ft=json | %!jq", {})
+vim.api.nvim_create_user_command("Jqp", ":set ft=json | %!jq --indent 4", {})
+
 -- run the buffer through jq to compact it
 vim.api.nvim_create_user_command("Jqc", ":set ft=json | %!jq -c", {})
+
 -- encode buffer into base64
 vim.api.nvim_create_user_command("B64e", ":set ft=txt | %!base64 --wrap=0", {})
+
 -- decode buffer as base64
 vim.api.nvim_create_user_command("B64d", ":set ft=txt | %!base64 --decode", {})
+
 -- decode the buffer as a jwt
 vim.api.nvim_create_user_command("Jwtd", ":%!jwt decode --json -", {})
+
 -- decode the buffer as a jwt and run the json through jq to make it pretty
 vim.api.nvim_create_user_command("Jwtdp", function()
     vim.cmd("Jwtd")
     vim.cmd("Jqp")
 end, {})
+
 -- decode the buffer as a jwt and run the json through jq to compact it
 vim.api.nvim_create_user_command("Jwtdc", function()
     vim.cmd("Jwtd")
     vim.cmd("Jqpc")
 end, {})
+
+-- assuming a buffer containing a decoded jwt, replace the buffer with just the
+-- token's subject (pretty)
+vim.api.nvim_create_user_command("Jwtsub", function ()
+    vim.cmd("%!jq '.payload.sub'")
+    vim.cmd("Jqp")
+end, {})
+
 
 -- os-specific stuff ----------------------------------------------------------
 require("config.os.loader") -- provides the Platform table for the os
