@@ -6,4 +6,7 @@ return {
 
     -- No welcome screen thing
     { "nvimdev/dashboard-nvim", enabled = false },
+
+    -- No auto completed quotes, brackets, parens, etc
+    { "echasnovski/mini.pairs", enabled = false },
 }

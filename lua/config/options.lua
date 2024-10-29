@@ -34,7 +34,11 @@ vim.opt.clipboard = ""
 -- disable the hiding of quotes in stuff like JSON and Markdown text
 vim.opt.conceallevel = 0
 
--- shortcuts for base64 encode/decode, json formatting, and jwt decode.
+-- shortcuts for stuff like:
+--  - base64 encode/decode,
+--  - json formatting
+--  - jwt decode
+--  - other stuff
 -- these all operate on the whole buffer.
 --
 -- required commands:
@@ -74,6 +78,26 @@ end, {})
 vim.api.nvim_create_user_command("Jwtsub", function ()
     vim.cmd("%!jq '.payload.sub'")
     vim.cmd("Jqp")
+end, {})
+
+-- assuming a buffer containing a decoded jwt, replace the buffer with an
+-- encoded (but signed with secret "bogus") jwt.
+-- TODO: Add a version of this that can read a secret from a file or env var.
+vim.api.nvim_create_user_command("Jwte", function ()
+    vim.cmd("%!jq '.payload'")
+    vim.cmd("Jqc")
+    vim.cmd("%!jwt encode --alg HS256 --no-iat --secret bogus -")
+end, {})
+
+-- convert an ffmpeg filter to a python format string that subs the the = and ,
+-- out for placeholders (don't ask why)
+vim.api.nvim_create_user_command("FffToPy", function ()
+    vim.cmd("%!sed 's/=/{eq}/g' | sed 's/,/{co}/g'")
+end, {})
+
+-- do the opposite of FffToPy (again, don't ask why)
+vim.api.nvim_create_user_command("PyToFff", function ()
+    vim.cmd("%!sed 's/{eq}/=/g' | sed 's/{co}/,/g'")
 end, {})
 
 
