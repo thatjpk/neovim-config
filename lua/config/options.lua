@@ -2,26 +2,44 @@
 -- Default options that are always set: https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/config/options.lua
 -- Add any additional options here
 
+
+-- Disable all of Snacks' stupid animations, added in LazyVim 13.x+
+vim.g.snacks_animate = false
+
 -- righteous indention
 vim.opt.tabstop = 4
 vim.opt.shiftwidth = 4
 vim.opt.softtabstop = 4
 vim.opt.expandtab = true
 
--- 80 columns
+-- 80 columns are all you need
 vim.opt.colorcolumn = "80,120" -- visual rulers
 vim.opt.textwidth = 80 -- width set for 'gw'
 -- TODO set color from theme?
 
--- cursor column color
-vim.opt.cursorcolumn = true
+-- cursor column
+vim.opt.cursorcolumn = false
 -- TODO set color from theme?
 
--- spellin
-vim.opt.spell = true
+-- cursor behavior
+vim.opt.guicursor = table.concat({
+    -- Blink in all modes
+    "a:blinkwait0-blinkoff300-blinkon300",
+    -- Vertical bar cursor in insert-ish modes
+    "i-ci-ve:ver20",
+    -- Horizontal underline cursor for replace-ish modes
+    "r-cr-o:hor20",
+    -- (Block cursor is default in all other modes, like normal)
+}, ",")
+
+-- speellin
+vim.opt.spell = false
 
 -- don't autoformat on save... i've got this under control.
 vim.g.autoformat = false
+
+-- completion
+-- (see lua/plugins/blink.lua)
 
 -- use the unnamed register as the default for yanks and cuts, like stock vim.
 -- lazyvim's default is to use a register that syncs with the system clipboard,
@@ -33,6 +51,9 @@ vim.opt.clipboard = ""
 
 -- disable the hiding of quotes in stuff like JSON and Markdown text
 vim.opt.conceallevel = 0
+
+-- don't automatically hard-wrap stuff as you type it
+vim.opt.wrap = false
 
 -- shortcuts for stuff like:
 --  - base64 encode/decode,
@@ -81,12 +102,19 @@ vim.api.nvim_create_user_command("Jwtsub", function ()
 end, {})
 
 -- assuming a buffer containing a decoded jwt, replace the buffer with an
--- encoded (but signed with secret "bogus") jwt.
--- TODO: Add a version of this that can read a secret from a file or env var.
+-- encoded jwt.  signed with secret "bogus" unless you set JWT_SECRET in the
+-- environment.  7d expiration.
 vim.api.nvim_create_user_command("Jwte", function ()
     vim.cmd("%!jq '.payload'")
     vim.cmd("Jqc")
-    vim.cmd("%!jwt encode --alg HS256 --no-iat --secret bogus -")
+    vim.cmd(
+        "%!jwt encode "
+        .."--alg HS256 "
+        .."--no-iat "
+        .."--secret ${JWT_SECRET-bogus} "
+        .."--exp $(date -u +'\\%s' -d \"$DATE + 7 days\") "
+        .."-"
+    )
 end, {})
 
 -- convert an ffmpeg filter to a python format string that subs the the = and ,
