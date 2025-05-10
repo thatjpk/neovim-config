@@ -105,16 +105,30 @@ end, {})
 -- encoded jwt.  signed with secret "bogus" unless you set JWT_SECRET in the
 -- environment.  7d expiration.
 vim.api.nvim_create_user_command("Jwte", function ()
-    vim.cmd("%!jq '.payload'")
-    vim.cmd("Jqc")
-    vim.cmd(
+    local days_to_expire = tonumber(os.getenv("JWT_EXPR_DAYS") or "7")
+    local jwt_secret = os.getenv("JWT_SECRET") or "bogus"
+    local command =
         "%!jwt encode "
+        .."--exp +"..days_to_expire.."d "
         .."--alg HS256 "
         .."--no-iat "
-        .."--secret ${JWT_SECRET-bogus} "
-        .."--exp $(date -u +'\\%s' -d \"$DATE + 7 days\") "
+        ..'--secret "'..jwt_secret..'" '
         .."-"
-    )
+
+    -- extract the payload because the `jwt encode` command writes its own
+    -- headers
+    vim.cmd("%!jq '.payload'")
+    -- strip out the existing expiration value because the `jwt encode` command
+    -- will use it instead of whatever we pass in via the `--exp` option.
+    vim.cmd("%!jq 'del(.exp)' -c")
+
+    -- WARNING: Setting this debug envvar will cause the command, including the
+    -- signing secret, to be printed to notifications in the editor.
+    -- local command_debug = os.getenv("JWTE_DEBUG") or false
+    -- if command_debug then
+    --     print(command)
+    -- end
+    vim.cmd(command)
 end, {})
 
 -- convert an ffmpeg filter to a python format string that subs the the = and ,
